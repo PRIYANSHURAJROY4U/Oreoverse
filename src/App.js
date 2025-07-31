@@ -1,13 +1,13 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import HomePage from "./pages/HomePage"
-import PoemPage from "./pages/PoemPage"
-import GeneratorPage from "./pages/GeneratorPage"
-import ReviewsPage from "./pages/ReviewsPage"
-import PrivateOreoPage from "./pages/PrivateOreoPage"
-import PrivateFriendsPage from "./pages/PrivateFriendsPage"
-import AdminPage from "./pages/AdminPage"
-import PrivateRoute from "./components/PrivateRoute"
-import "./App.css"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import PoemPage from "./pages/PoemPage";
+import GeneratorPage from "./pages/GeneratorPage";
+import ReviewsPage from "./pages/ReviewsPage";
+import PrivateOreoPage from "./pages/PrivateOreoPage";
+import PrivateFriendsPage from "./pages/PrivateFriendsPage";
+import AdminPage from "./pages/AdminPage";
+import PrivateRoute from "./components/PrivateRoute";
+import "./App.css";
 
 function App() {
   return (
@@ -45,7 +45,7 @@ function App() {
         </Routes>
       </div>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;

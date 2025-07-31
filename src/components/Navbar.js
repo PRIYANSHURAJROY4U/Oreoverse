@@ -1,27 +1,53 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Link, useLocation } from "react-router-dom"
-import { Heart, Menu, X, BookOpen, Sparkles, MessageCircle, User, Users, Settings } from "lucide-react"
-import Button from "./ui/Button"
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import {
+  Heart,
+  Menu,
+  X,
+  BookOpen,
+  Sparkles,
+  MessageCircle,
+  User,
+  Users,
+  Settings,
+} from "lucide-react";
+import Button from "./ui/Button";
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const location = useLocation()
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
-  const isActive = (path) => location.pathname === path
+  const isActive = (path) => location.pathname === path;
 
   const navLinks = [
     { path: "/", label: "Home", icon: <BookOpen className="w-4 h-4" /> },
-    { path: "/generator", label: "Generator", icon: <Sparkles className="w-4 h-4" /> },
-    { path: "/reviews", label: "Reviews", icon: <MessageCircle className="w-4 h-4" /> },
-  ]
+    {
+      path: "/generator",
+      label: "Generator",
+      icon: <Sparkles className="w-4 h-4" />,
+    },
+    {
+      path: "/reviews",
+      label: "Reviews",
+      icon: <MessageCircle className="w-4 h-4" />,
+    },
+  ];
 
   const privateLinks = [
-    { path: "/oreo-private", label: "Oreo's Space", icon: <User className="w-4 h-4" /> },
-    { path: "/friends-keerthi-mouli", label: "Friends Corner", icon: <Users className="w-4 h-4" /> },
+    {
+      path: "/oreo-private",
+      label: "Oreo's Space",
+      icon: <User className="w-4 h-4" />,
+    },
+    {
+      path: "/friends-keerthi-mouli",
+      label: "Friends Corner",
+      icon: <Users className="w-4 h-4" />,
+    },
     { path: "/admin", label: "Admin", icon: <Settings className="w-4 h-4" /> },
-  ]
+  ];
 
   return (
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-purple-100">
@@ -44,7 +70,9 @@ const Navbar = () => {
                 key={link.path}
                 to={link.path}
                 className={`flex items-center space-x-1 transition-colors ${
-                  isActive(link.path) ? "text-purple-600 font-medium" : "text-slate-600 hover:text-purple-600"
+                  isActive(link.path)
+                    ? "text-purple-600 font-medium"
+                    : "text-slate-600 hover:text-purple-600"
                 }`}
               >
                 {link.icon}
@@ -59,7 +87,9 @@ const Navbar = () => {
                 key={link.path}
                 to={link.path}
                 className={`flex items-center space-x-1 text-sm transition-colors ${
-                  isActive(link.path) ? "text-purple-600 font-medium" : "text-slate-500 hover:text-purple-600"
+                  isActive(link.path)
+                    ? "text-purple-600 font-medium"
+                    : "text-slate-500 hover:text-purple-600"
                 }`}
               >
                 {link.icon}
@@ -79,7 +109,11 @@ const Navbar = () => {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-slate-600 hover:text-purple-600 transition-colors"
             >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
             </button>
           </div>
         </div>
@@ -133,7 +167,7 @@ const Navbar = () => {
         )}
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

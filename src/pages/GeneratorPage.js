@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Sparkles, Wand2, Heart, RefreshCw } from "lucide-react"
-import Navbar from "../components/Navbar"
-import Button from "../components/ui/Button"
-import Card from "../components/ui/Card"
+import { useState } from "react";
+import { Sparkles, Wand2, Heart, RefreshCw } from "lucide-react";
+import Navbar from "../components/Navbar";
+import Button from "../components/ui/Button";
+import Card from "../components/ui/Card";
 
 const GeneratorPage = () => {
-  const [theme, setTheme] = useState("")
-  const [generatedPoem, setGeneratedPoem] = useState("")
-  const [isGenerating, setIsGenerating] = useState(false)
+  const [theme, setTheme] = useState("");
+  const [generatedPoem, setGeneratedPoem] = useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const poemTemplates = [
     {
@@ -40,10 +40,17 @@ Through {challenges} and {joys} we keep,
 {Promise} echoes in my heart,
 True friends never drift apart.`,
     },
-  ]
+  ];
 
   const wordBanks = {
-    object: ["moonlight", "starlight", "sunshine", "crystal", "diamond", "flower"],
+    object: [
+      "moonlight",
+      "starlight",
+      "sunshine",
+      "crystal",
+      "diamond",
+      "flower",
+    ],
     quality: ["kindness", "beauty", "wisdom", "grace", "laughter", "spirit"],
     context: ["darkness", "silence", "chaos", "storms", "winter", "twilight"],
     action: ["smile", "touch", "word", "glance", "embrace", "whisper"],
@@ -53,38 +60,48 @@ True friends never drift apart.`,
     Feeling: ["Serenity", "Wonder", "Peace", "Joy", "Calm", "Bliss"],
     color: ["golden", "silver", "purple", "azure", "crimson", "emerald"],
     texture: ["silken", "velvet", "crystal", "gossamer", "satin", "pearl"],
-    creatures: ["angels", "butterflies", "birds", "spirits", "fairies", "stars"],
+    creatures: [
+      "angels",
+      "butterflies",
+      "birds",
+      "spirits",
+      "fairies",
+      "stars",
+    ],
     Emotion: ["Wonder", "Peace", "Love", "Hope", "Joy", "Magic"],
     metaphor: ["rivers", "mountains", "stars", "roots", "threads", "bridges"],
     challenges: ["storms", "trials", "changes", "seasons", "years", "miles"],
     joys: ["laughter", "memories", "dreams", "adventures", "moments", "songs"],
     Promise: ["Loyalty", "Trust", "Love", "Faith", "Hope", "Care"],
-  }
+  };
 
   const generatePoem = () => {
-    if (!theme.trim()) return
+    if (!theme.trim()) return;
 
-    setIsGenerating(true)
+    setIsGenerating(true);
 
     // Simulate API call delay
     setTimeout(() => {
       const matchingTemplate = poemTemplates.find(
         (t) =>
-          t.theme.toLowerCase().includes(theme.toLowerCase()) || theme.toLowerCase().includes(t.theme.toLowerCase()),
-      )
+          t.theme.toLowerCase().includes(theme.toLowerCase()) ||
+          theme.toLowerCase().includes(t.theme.toLowerCase())
+      );
 
-      const template = matchingTemplate ? matchingTemplate.template : poemTemplates[0].template
+      const template = matchingTemplate
+        ? matchingTemplate.template
+        : poemTemplates[0].template;
 
       // Replace placeholders with random words
       const poem = template.replace(/\{(\w+)\}/g, (match, key) => {
-        const words = wordBanks[key]
-        return words ? words[Math.floor(Math.random() * words.length)] : match
-      })
+        const words = wordBanks[key];
+        return words ? words[Math.floor(Math.random() * words.length)] : match;
+      });
 
-      setGeneratedPoem(poem)
-      setIsGenerating(false)
-    }, 1500)
-  }
+      setGeneratedPoem(poem);
+      setIsGenerating(false);
+    }, 1500);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-pink-50">
@@ -104,8 +121,8 @@ True friends never drift apart.`,
             </span>
           </h1>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-            Let Oreo's poetic spirit inspire a personalized poem just for you! Enter a theme and watch the magic happen
-            🎵
+            Let Oreo's poetic spirit inspire a personalized poem just for you!
+            Enter a theme and watch the magic happen 🎵
           </p>
         </div>
 
@@ -114,7 +131,10 @@ True friends never drift apart.`,
           <div className="p-8">
             <div className="space-y-6">
               <div>
-                <label htmlFor="theme" className="block text-lg font-semibold text-slate-800 mb-3">
+                <label
+                  htmlFor="theme"
+                  className="block text-lg font-semibold text-slate-800 mb-3"
+                >
                   What's inspiring you today?
                 </label>
                 <input
@@ -165,7 +185,9 @@ True friends never drift apart.`,
           <Card className="bg-gradient-to-br from-purple-50 to-pink-50 border-0 shadow-xl">
             <div className="p-8">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-slate-800">Your Personalized Poem</h2>
+                <h2 className="text-2xl font-bold text-slate-800">
+                  Your Personalized Poem
+                </h2>
                 <div className="flex items-center space-x-2 text-purple-600">
                   <Heart className="w-5 h-5" />
                   <span className="text-sm">Generated with Oreo's magic</span>
@@ -197,15 +219,20 @@ True friends never drift apart.`,
 
         {/* How It Works */}
         <div className="mt-16 text-center">
-          <h3 className="text-2xl font-bold text-slate-800 mb-8">How the Magic Works ✨</h3>
+          <h3 className="text-2xl font-bold text-slate-800 mb-8">
+            How the Magic Works ✨
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white/50 rounded-2xl p-6 border border-purple-100">
               <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl">🎯</span>
               </div>
-              <h4 className="font-semibold text-slate-800 mb-2">Choose Your Theme</h4>
+              <h4 className="font-semibold text-slate-800 mb-2">
+                Choose Your Theme
+              </h4>
               <p className="text-slate-600 text-sm">
-                Enter any theme that inspires you - love, nature, dreams, or anything else!
+                Enter any theme that inspires you - love, nature, dreams, or
+                anything else!
               </p>
             </div>
 
@@ -213,9 +240,12 @@ True friends never drift apart.`,
               <div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl">✨</span>
               </div>
-              <h4 className="font-semibold text-slate-800 mb-2">Oreo's Magic</h4>
+              <h4 className="font-semibold text-slate-800 mb-2">
+                Oreo's Magic
+              </h4>
               <p className="text-slate-600 text-sm">
-                Our generator uses Oreo's poetic style to create something beautiful and unique.
+                Our generator uses Oreo's poetic style to create something
+                beautiful and unique.
               </p>
             </div>
 
@@ -223,16 +253,19 @@ True friends never drift apart.`,
               <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl">💜</span>
               </div>
-              <h4 className="font-semibold text-slate-800 mb-2">Enjoy & Share</h4>
+              <h4 className="font-semibold text-slate-800 mb-2">
+                Enjoy & Share
+              </h4>
               <p className="text-slate-600 text-sm">
-                Your personalized poem is ready! Share it with friends or keep it as inspiration.
+                Your personalized poem is ready! Share it with friends or keep
+                it as inspiration.
               </p>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default GeneratorPage
+export default GeneratorPage;

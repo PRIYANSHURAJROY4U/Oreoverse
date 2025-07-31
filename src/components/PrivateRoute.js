@@ -1,31 +1,31 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Lock, Eye, EyeOff } from "lucide-react"
-import Button from "./ui/Button"
+import { useState } from "react";
+import { Lock, Eye, EyeOff } from "lucide-react";
+import Button from "./ui/Button";
 
 const PrivateRoute = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [password, setPassword] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
-  const [error, setError] = useState("")
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
 
   // Simple password protection (in production, use proper authentication)
-  const correctPassword = "oreo2024" // You can change this
+  const correctPassword = "oreo2024"; // You can change this
 
   const handleLogin = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (password === correctPassword) {
-      setIsAuthenticated(true)
-      setError("")
+      setIsAuthenticated(true);
+      setError("");
     } else {
-      setError("Incorrect password. Please try again.")
-      setPassword("")
+      setError("Incorrect password. Please try again.");
+      setPassword("");
     }
-  }
+  };
 
   if (isAuthenticated) {
-    return children
+    return children;
   }
 
   return (
@@ -36,13 +36,21 @@ const PrivateRoute = ({ children }) => {
             <div className="w-16 h-16 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
               <Lock className="w-8 h-8 text-white" />
             </div>
-            <h2 className="text-2xl font-bold text-slate-800 mb-2">Private Access</h2>
-            <p className="text-slate-600">This is a special private area. Please enter the password to continue.</p>
+            <h2 className="text-2xl font-bold text-slate-800 mb-2">
+              Private Access
+            </h2>
+            <p className="text-slate-600">
+              This is a special private area. Please enter the password to
+              continue.
+            </p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-6">
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-2">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-slate-700 mb-2"
+              >
                 Password
               </label>
               <div className="relative">
@@ -60,13 +68,19 @@ const PrivateRoute = ({ children }) => {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-500 hover:text-slate-700"
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showPassword ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
                 </button>
               </div>
             </div>
 
             {error && (
-              <div className="bg-red-50 border border-red-200 rounded-xl p-3 text-red-600 text-sm">{error}</div>
+              <div className="bg-red-50 border border-red-200 rounded-xl p-3 text-red-600 text-sm">
+                {error}
+              </div>
             )}
 
             <Button
@@ -79,12 +93,14 @@ const PrivateRoute = ({ children }) => {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-xs text-slate-500">This area is password protected for privacy and security.</p>
+            <p className="text-xs text-slate-500">
+              This area is password protected for privacy and security.
+            </p>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PrivateRoute
+export default PrivateRoute;
