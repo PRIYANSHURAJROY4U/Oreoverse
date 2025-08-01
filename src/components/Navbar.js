@@ -201,7 +201,7 @@ const Navbar = () => {
   const navLinks = [
     { path: "/", label: "Home", icon: <BookOpen className="w-4 h-4" /> },
     {
-      path: "/generator",
+      path: "/poem-generator",
       label: "Generator",
       icon: <Sparkles className="w-4 h-4" />,
     },
@@ -219,7 +219,7 @@ const Navbar = () => {
       icon: <User className="w-4 h-4" />,
     },
     {
-      path: "/friends-keerthi-mouli",
+      path: "/friend",
       label: "Friends Corner",
       icon: <Users className="w-4 h-4" />,
     },

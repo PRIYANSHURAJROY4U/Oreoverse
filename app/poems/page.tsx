@@ -1,18 +1,33 @@
-"use client"
-import { useParams, Link } from "react-router-dom"
-import { ArrowLeft, Heart, Share2, BookOpen, Calendar, MessageCircle } from "lucide-react"
-import Navbar from "../components/Navbar"
-import Button from "../components/ui/Button"
-import Badge from "../components/ui/Badge"
+"use client";
 
-const PoemPage = () => {
-  const { id } = useParams()
+import { useParams } from "next/navigation";
+import Link from "next/link";
+import {
+  ArrowLeft,
+  Heart,
+  Share2,
+  BookOpen,
+  Calendar,
+  MessageCircle,
+} from "lucide-react";
 
-  // Mock poem data (in real app, fetch from API)
+import { Badge } from "@/components/ui/badge";
 
+// import Navbar from "@/components/Navbar";
+// import { Button } from "@/components/ui/button";
+// import { Badge } from "@/components/ui/badge";
 
+import Navbar from "../../src/components/Navbar";
+import Button from "../../src/components/ui/Button";
+import Card from "../../src/components/ui/Card";
+
+export default function PoemPage() {
+  const params = useParams();
+  const id = params?.id;
+
+  // Mock poem data (replace with API call or DB)
   const poem = {
-    id: 1,
+    id: id,
     title: "Midnight Thoughts",
     content: `Like stars that dance in velvet skies,
 Your words illuminate the night,
@@ -37,19 +52,19 @@ Together, heart and soul and hand.`,
     mood: "dreamy",
     likes: 47,
     author: "Oreo",
-  }
+  };
 
-  const getMoodColor = (mood) => {
-    const colors = {
+  const getMoodColor = (mood: string) => {
+    const colors: Record<string, string> = {
       dreamy: "bg-purple-100 text-purple-800 border-purple-200",
       romantic: "bg-pink-100 text-pink-800 border-pink-200",
       whimsical: "bg-yellow-100 text-yellow-800 border-yellow-200",
       ethereal: "bg-indigo-100 text-indigo-800 border-indigo-200",
       magical: "bg-emerald-100 text-emerald-800 border-emerald-200",
       mystical: "bg-slate-100 text-slate-800 border-slate-200",
-    }
-    return colors[mood] || "bg-gray-100 text-gray-800"
-  }
+    };
+    return colors[mood] || "bg-gray-100 text-gray-800";
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-pink-50">
@@ -57,7 +72,10 @@ Together, heart and soul and hand.`,
 
       <div className="max-w-4xl mx-auto px-4 py-12">
         {/* Back Button */}
-        <Link to="/" className="inline-flex items-center text-slate-600 hover:text-purple-600 transition-colors mb-8">
+        <Link
+          href="/"
+          className="inline-flex items-center text-slate-600 hover:text-purple-600 transition-colors mb-8"
+        >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Poetry Collection
         </Link>
@@ -66,7 +84,9 @@ Together, heart and soul and hand.`,
         <div className="bg-white/70 backdrop-blur-sm rounded-3xl shadow-xl border border-purple-100 p-8 mb-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
             <div className="mb-4 md:mb-0">
-              <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-2">{poem.title}</h1>
+              <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-2">
+                {poem.title}
+              </h1>
               <div className="flex items-center space-x-4 text-slate-600">
                 <div className="flex items-center">
                   <Calendar className="w-4 h-4 mr-1" />
@@ -101,12 +121,18 @@ Together, heart and soul and hand.`,
               <Heart className="w-4 h-4 mr-2" />
               Like This Poem
             </Button>
-            <Button variant="outline" className="border-purple-300 text-purple-600 hover:bg-purple-50 bg-transparent">
+            <Button
+              variant="outline"
+              className="border-purple-300 text-purple-600 hover:bg-purple-50 bg-transparent"
+            >
               <Share2 className="w-4 h-4 mr-2" />
               Share
             </Button>
-            <Link to="/">
-              <Button variant="outline" className="border-slate-300 text-slate-600 hover:bg-slate-50 bg-transparent">
+            <Link href="/">
+              <Button
+                variant="outline"
+                className="border-slate-300 text-slate-600 hover:bg-slate-50 bg-transparent"
+              >
                 <BookOpen className="w-4 h-4 mr-2" />
                 Read More Poems
               </Button>
@@ -114,17 +140,20 @@ Together, heart and soul and hand.`,
           </div>
         </div>
 
-        {/* Comments Section Placeholder */}
+        {/* Comments Section */}
         <div className="bg-white/70 backdrop-blur-sm rounded-3xl shadow-xl border border-purple-100 p-8">
-          <h3 className="text-2xl font-bold text-slate-800 mb-6">Reader Comments</h3>
+          <h3 className="text-2xl font-bold text-slate-800 mb-6">
+            Reader Comments
+          </h3>
           <div className="text-center py-12 text-slate-500">
             <MessageCircle className="w-12 h-12 mx-auto mb-4 opacity-50" />
-            <p>Comments section coming soon! Share your thoughts about this beautiful poem.</p>
+            <p>
+              Comments section coming soon! Share your thoughts about this
+              beautiful poem.
+            </p>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
-
-export default PoemPage

@@ -1,9 +1,19 @@
-import { Heart, Users, Sparkles, Star, MessageCircleHeartIcon as MessageHeart, Crown } from "lucide-react"
-import Navbar from "../components/Navbar"
-import Button from "../components/ui/Button"
-import Card from "../components/ui/Card"
+"use client";
 
-const PrivateFriendsPage = () => {
+import { Heart, Users, Sparkles, Star, Crown } from "lucide-react";
+import { MessageCircleHeart as MessageHeart } from "lucide-react";
+import Link from "next/link";
+import PrivateRoute from "../../components/PrivateRoute";
+// import Navbar from "../";
+// import Button from "@/components/ui/Button";
+// import Card from "@/components/ui/Card";
+
+import Navbar from "../../src/components/Navbar";
+import Button from "../../src/components/ui/Button";
+import Card from "../../src/components/ui/Card";
+
+
+export default function PrivateFriendsPage() {
   const friendMessages = [
     {
       name: "Keerthi",
@@ -21,7 +31,7 @@ const PrivateFriendsPage = () => {
       emoji: "🎭",
       memories: ["Poetry reading sessions", "Creative brainstorming", "Friendship adventures"],
     },
-  ]
+  ];
 
   const friendshipMoments = [
     {
@@ -48,9 +58,10 @@ const PrivateFriendsPage = () => {
       icon: "✨",
       color: "bg-indigo-100",
     },
-  ]
+  ];
 
   return (
+    <PrivateRoute>
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50">
       <Navbar />
 
@@ -219,7 +230,6 @@ const PrivateFriendsPage = () => {
         </div>
       </section>
     </div>
-  )
+    </PrivateRoute>
+  );
 }
-
-export default PrivateFriendsPage

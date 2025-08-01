@@ -1,5 +1,6 @@
 "use client";
 
+import PrivateRoute from "../../components/PrivateRoute";
 import { useState } from "react";
 import {
   Plus,
@@ -145,6 +146,7 @@ I couldn't ask for anything more.`,
     );
 
   return (
+    <PrivateRoute>
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-pink-50">
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 py-12">
@@ -202,6 +204,7 @@ I couldn't ask for anything more.`,
         {/* --- Keep same as your version --- */}
       </div>
     </div>
+    </PrivateRoute>
   );
 };
 

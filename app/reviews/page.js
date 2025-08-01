@@ -2,9 +2,9 @@
 
 import { useState } from "react"
 import { Star, Heart, MessageCircle, Send, User } from "lucide-react"
-import Navbar from "../components/Navbar"
-import Button from "../components/ui/Button"
-import Card from "../components/ui/Card"
+import Navbar from "../../src/components/Navbar"
+import Button from "../../src/components/ui/Button"
+import Card from "../../src/components/ui/Card"
 
 const ReviewsPage = () => {
   const [newReview, setNewReview] = useState({

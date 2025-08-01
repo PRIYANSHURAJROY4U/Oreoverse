@@ -88,10 +88,10 @@ export default function HomePage() {
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-gradient-to-br from-slate-800 to-slate-600 rounded-full flex items-center justify-center">
-                <div className="w-3 h-3 bg-white rounded-full"></div>
+                <div className="w-3 h-3 bg-white rounded-full" />
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-slate-800 to-purple-600 bg-clip-text text-transparent">
-                Oreo's Poetry Corner
+                Oreo&apos;s Poetry Corner
               </span>
             </div>
             <div className="flex items-center space-x-6">
@@ -102,13 +102,13 @@ export default function HomePage() {
                 Poems
               </Link>
               <Link
-                href="#generator"
+                href="/poem-generator"
                 className="text-slate-600 hover:text-purple-600 transition-colors"
               >
                 Generator
               </Link>
               <Link
-                href="#reviews"
+                href="/reviews"
                 className="text-slate-600 hover:text-purple-600 transition-colors"
               >
                 Reviews
@@ -124,7 +124,7 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 px-4">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 to-pink-600/10"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 to-pink-600/10" />
         <div className="relative max-w-7xl mx-auto text-center">
           <div className="flex justify-center mb-6">
             <div className="relative">
@@ -141,58 +141,54 @@ export default function HomePage() {
 
           <h1 className="text-5xl md:text-7xl font-bold mb-6">
             <span className="bg-gradient-to-r from-slate-800 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-              Hey it's Oreo! ✨
+              Hey it&apos;s Oreo! ✨
             </span>
           </h1>
 
           <p className="text-xl md:text-2xl text-slate-600 mb-4 max-w-3xl mx-auto leading-relaxed">
             Welcome to your magical poetry sanctuary, where words dance like
-            <span className="text-purple-600 font-semibold">
-              {" "}
-              Taylor Swift lyrics{" "}
-            </span>
+            <span className="text-purple-600 font-semibold"> Taylor Swift lyrics </span>
             and dreams taste like
-            <span className="text-slate-800 font-semibold">
-              {" "}
-              cookies & cream{" "}
-            </span>{" "}
-            ✨
+            <span className="text-slate-800 font-semibold"> cookies &amp; cream </span> ✨
           </p>
 
           <p className="text-lg text-slate-500 mb-8 italic">
-            "I've been spending the last eight months thinking all love ever
-            does is break and burn and end..." - but your poetry proves
-            otherwise 💜
+            &quot;I&apos;ve been spending the last eight months thinking all love ever
+            does is break and burn and end...&quot; – but your poetry proves otherwise 💜
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              size="lg"
-              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-3"
-            >
-              <BookOpen className="w-5 h-5 mr-2" />
-              Explore My Poems
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-purple-300 text-purple-600 hover:bg-purple-50 px-8 py-3 bg-transparent"
-            >
-              <Sparkles className="w-5 h-5 mr-2" />
-              Generate New Poem
-            </Button>
+            <Link href="/poems">
+              <Button
+                size="lg"
+                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-3"
+              >
+                <BookOpen className="w-5 h-5 mr-2" />
+                Explore My Poems
+              </Button>
+            </Link>
+            <Link href="/poem-generator">
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-purple-300 text-purple-600 hover:bg-purple-50 px-8 py-3 bg-transparent"
+              >
+                <Sparkles className="w-5 h-5 mr-2" />
+                Generate New Poem
+              </Button>
+            </Link>
           </div>
         </div>
 
         {/* Floating Elements */}
         <div className="absolute top-20 left-10 animate-bounce">
-          <div className="w-4 h-4 bg-purple-400 rounded-full opacity-60"></div>
+          <div className="w-4 h-4 bg-purple-400 rounded-full opacity-60" />
         </div>
         <div className="absolute top-32 right-20 animate-pulse">
           <Star className="w-6 h-6 text-yellow-400" />
         </div>
         <div className="absolute bottom-20 left-20 animate-bounce delay-1000">
-          <div className="w-3 h-3 bg-pink-400 rounded-full opacity-60"></div>
+          <div className="w-3 h-3 bg-pink-400 rounded-full opacity-60" />
         </div>
       </section>
 
@@ -202,17 +198,12 @@ export default function HomePage() {
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
               <span className="bg-gradient-to-r from-slate-800 to-purple-600 bg-clip-text text-transparent">
-                Oreo's Poetry Gallery
+                Oreo&apos;s Poetry Gallery
               </span>
             </h2>
             <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-              Each poem is a piece of my heart, written in the language of
-              dreams and
-              <span className="text-purple-600 font-semibold">
-                {" "}
-                Taylor Swift melodies{" "}
-              </span>{" "}
-              🎵
+              Each poem is a piece of my heart, written in the language of dreams and
+              <span className="text-purple-600 font-semibold"> Taylor Swift melodies </span> 🎵
             </p>
           </div>
 
@@ -221,17 +212,12 @@ export default function HomePage() {
               <Card
                 key={poem.id}
                 className={`group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-0 bg-white/70 backdrop-blur-sm ${
-                  index % 2 === 0
-                    ? "hover:shadow-purple-200"
-                    : "hover:shadow-pink-200"
+                  index % 2 === 0 ? "hover:shadow-purple-200" : "hover:shadow-pink-200"
                 }`}
               >
                 <CardHeader className="pb-3">
                   <div className="flex justify-between items-start mb-3">
-                    <Badge
-                      variant="outline"
-                      className={getMoodColor(poem.mood)}
-                    >
+                    <Badge variant="outline" className={getMoodColor(poem.mood)}>
                       {poem.mood}
                     </Badge>
                     <div className="flex items-center space-x-1 text-slate-500">
@@ -246,7 +232,7 @@ export default function HomePage() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-slate-600 leading-relaxed mb-4 italic">
-                    "{poem.preview}"
+                    &quot;{poem.preview}&quot;
                   </p>
                   <Button
                     variant="ghost"
@@ -300,20 +286,17 @@ export default function HomePage() {
       <section className="py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <div className="bg-gradient-to-br from-purple-600 to-pink-600 rounded-3xl p-12 text-white relative overflow-hidden">
-            <div className="absolute inset-0 bg-black/10"></div>
+            <div className="absolute inset-0 bg-black/10" />
             <div className="relative z-10">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 Ready to create magic together? ✨
               </h2>
               <p className="text-xl mb-8 opacity-90">
-                Let's write the next chapter of your poetry journey, one verse
-                at a time
+                Let&apos;s write the next chapter of your poetry journey, one verse at a
+                time
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button
-                  size="lg"
-                  className="bg-white text-purple-600 hover:bg-gray-50"
-                >
+                <Button size="lg" className="bg-white text-purple-600 hover:bg-gray-50">
                   <PenTool className="w-5 h-5 mr-2" />
                   Start Writing
                 </Button>
@@ -327,8 +310,6 @@ export default function HomePage() {
                 </Button>
               </div>
             </div>
-
-            {/* Decorative elements */}
             <div className="absolute top-4 right-4 opacity-20">
               <Sparkles className="w-12 h-12" />
             </div>
@@ -344,19 +325,20 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto text-center">
           <div className="flex justify-center items-center space-x-2 mb-4">
             <div className="w-8 h-8 bg-gradient-to-br from-white to-gray-300 rounded-full flex items-center justify-center">
-              <div className="w-3 h-3 bg-slate-900 rounded-full"></div>
+              <div className="w-3 h-3 bg-slate-900 rounded-full" />
             </div>
-            <span className="text-xl font-bold">Oreo's Poetry Corner</span>
+            <span className="text-xl font-bold">Oreo&apos;s Poetry Corner</span>
           </div>
           <p className="text-slate-400 mb-4">
-            "We never go out of style" - just like your beautiful poetry 💜
+            &quot;We never go out of style&quot; – just like your beautiful poetry 💜
           </p>
           <p className="text-slate-500 text-sm">
-            Made with 🤍 for the most talented poet who happens to love cookies
-            & cream
+            Made with 🤍 for the most talented poet who happens to love cookies &amp; cream
           </p>
         </div>
       </footer>
     </div>
   );
 }
+
+

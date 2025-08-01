@@ -1,7 +1,8 @@
 import { Heart, Sparkles, Crown, Star, Gift, Music } from "lucide-react"
-import Navbar from "../components/Navbar"
-import Button from "../components/ui/Button"
-import Card from "../components/ui/Card"
+import Navbar from "../../src/components/Navbar"
+import Button from "../../src/components/ui/Button"
+import Card from "../../src/components/ui/Card"
+import PrivateRoute from "../../components/PrivateRoute";
 
 const PrivateOreoPage = () => {
   const personalMessages = [
@@ -39,6 +40,7 @@ const PrivateOreoPage = () => {
   ]
 
   return (
+    <PrivateRoute>
     <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-yellow-50">
       <Navbar />
 
@@ -174,6 +176,7 @@ const PrivateOreoPage = () => {
         </div>
       </section>
     </div>
+    </PrivateRoute>
   )
 }
 
