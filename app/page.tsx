@@ -564,14 +564,65 @@ export default function HomePage() {
     setCrumbs(newCrumbs);
   };
 
+  // const poems = [
+  //   { id: 1, title: "Midnight Thoughts", preview: "Like stars that dance...", date: "December 13, 2024", mood: "dreamy", likes: 47 },
+  //   { id: 2, title: "Golden Hour Dreams", preview: "In the space between...", date: "November 28, 2024", mood: "romantic", likes: 62 },
+  //   { id: 3, title: "Paper Rings & Promises", preview: "I'd marry you...", date: "October 15, 2024", mood: "whimsical", likes: 89 },
+  //   { id: 4, title: "Lavender Haze", preview: "Stained glass windows...", date: "September 22, 2024", mood: "ethereal", likes: 73 },
+  //   { id: 5, title: "Enchanted Moments", preview: "This night is sparkling...", date: "August 30, 2024", mood: "magical", likes: 95 },
+  //   { id: 6, title: "Folklore Whispers", preview: "In the quiet of the forest...", date: "July 18, 2024", mood: "mystical", likes: 56 },
+  // ];
   const poems = [
-    { id: 1, title: "Midnight Thoughts", preview: "Like stars that dance...", date: "December 13, 2024", mood: "dreamy", likes: 47 },
-    { id: 2, title: "Golden Hour Dreams", preview: "In the space between...", date: "November 28, 2024", mood: "romantic", likes: 62 },
-    { id: 3, title: "Paper Rings & Promises", preview: "I'd marry you...", date: "October 15, 2024", mood: "whimsical", likes: 89 },
-    { id: 4, title: "Lavender Haze", preview: "Stained glass windows...", date: "September 22, 2024", mood: "ethereal", likes: 73 },
-    { id: 5, title: "Enchanted Moments", preview: "This night is sparkling...", date: "August 30, 2024", mood: "magical", likes: 95 },
-    { id: 6, title: "Folklore Whispers", preview: "In the quiet of the forest...", date: "July 18, 2024", mood: "mystical", likes: 56 },
-  ];
+  {
+    id: 1,
+    title: "Immortal I Lie",
+    preview: "The moment you place me in the coffin, My lungs give up...",
+    date: "August 15, 2025",
+    mood: "reflective",
+    likes: 0
+  },
+  {
+    id: 2,
+    title: "When Will I Script My Own Stars?",
+    preview: "On usual days, I wait for words. I fear the string...",
+    date: "August 15, 2025",
+    mood: "contemplative",
+    likes: 0
+  },
+  {
+    id: 3,
+    title: "Pause",
+    preview: "I drew the curtains, Turned the lights off To take a break...",
+    date: "August 15, 2025",
+    mood: "melancholic",
+    likes: 0
+  },
+  {
+    id: 4,
+    title: "Low Serotonin",
+    preview: "Wandering through the woods on a snowy evening, Sugar rush...",
+    date: "August 15, 2025",
+    mood: "introspective",
+    likes: 0
+  },
+  {
+    id: 5,
+    title: "I'll Be Back Home To You",
+    preview: "From the dark depths Of the dying city, Carefully dodging...",
+    date: "August 15, 2025",
+    mood: "nostalgic",
+    likes: 0
+  },
+  {
+    id: 6,
+    title: "You're Cold",
+    preview: "\"You're cold\", I said as he brushed, His fingers twined...",
+    date: "August 15, 2025",
+    mood: "somber",
+    likes: 0
+  }
+];
+
 
   const getMoodColor = (mood: string) => {
     const colors = {
@@ -634,7 +685,7 @@ export default function HomePage() {
         {menuOpen && (
           <div className="md:hidden bg-white border-t border-purple-100 shadow-md">
             <div className="flex flex-col items-center space-y-4 py-4">
-              <Link onClick={() => setMenuOpen(false)} href="#poems" className="text-slate-600 hover:text-purple-600">Poems</Link>
+              <Link onClick={() => setMenuOpen(false)} href="/poems" className="text-slate-600 hover:text-purple-600">Poems</Link>
               <Link onClick={() => setMenuOpen(false)} href="/poem-generator" className="text-slate-600 hover:text-purple-600">Generator</Link>
               <Link onClick={() => setMenuOpen(false)} href="/reviews" className="text-slate-600 hover:text-purple-600">Reviews</Link>
               <Button onClick={() => setMenuOpen(false)} className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">
@@ -698,10 +749,27 @@ export default function HomePage() {
                   <h3 className="text-xl font-bold text-slate-800 group-hover:text-purple-600">{poem.title}</h3>
                   <p className="text-sm text-slate-500">{poem.date}</p>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-slate-600 leading-relaxed mb-4 italic">&quot;{poem.preview}&quot;</p>
+                {/* <CardContent>
+                  <p className="text-slate-600 leading-relaxed mb-4 italic">&quot;{poem.preview}&quot;</p> <link href="/poems">
                   <Button variant="ghost" className="w-full group-hover:bg-purple-50 group-hover:text-purple-600">Read Full Poem <BookOpen className="w-4 h-4 ml-2" /></Button>
-                </CardContent>
+                  </link>
+                </CardContent> */}
+                <CardContent>
+  <p className="text-slate-600 leading-relaxed mb-4 italic">
+    &quot;{poem.preview}&quot;
+  </p>
+  <Link href="/poems" passHref legacyBehavior>
+    <a>
+      <Button
+        variant="ghost"
+        className="w-full group-hover:bg-purple-50 group-hover:text-purple-600"
+      >
+        Read Full Poem
+        <BookOpen className="w-4 h-4 ml-2" />
+      </Button>
+    </a>
+  </Link>
+</CardContent>
               </Card>
             ))}
           </div>
@@ -747,7 +815,7 @@ export default function HomePage() {
           </div>
           <span className="text-xl font-bold">Oreo&apos;s Poetry Corner</span>
         </div>
-        <p className="text-slate-400 mb-4">&quot;We never go out of style&quot; – just like your beautiful poetry 💜</p>
+        <p className="text-slate-400 mb-4">&quot;We never go out of style&quot; – just like our beautiful poetry 💜</p>
         <p className="text-slate-500 text-sm">Made with 🤍 for the most talented poet who loves cookies &amp; cream</p>
       </footer>
     </div>
