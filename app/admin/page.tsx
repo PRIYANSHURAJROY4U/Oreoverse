@@ -534,20 +534,343 @@
 //   );
 // }
 
+
+
+
+
+// below is the original code keeping the without ref next.js edit shift 
+
+
+
+// "use client";
+
+// import { useEffect, useState } from "react";
+// import { useRouter } from "next/navigation";
+// import { Plus, Edit, Trash2, Save, X } from "lucide-react";
+
+// // import Navbar from "@/components/Navbar";
+// // import Button from "@/components/ui/Button";
+// // import Card from "@/components/ui/Card";
+// import { Badge } from "../../components/badge";
+
+// import Navbar from "../../src/components/Navbar"
+// import Button from "../../src/components/ui/Button"
+// import Card from "../../src/components/ui/Card"
+
+// type PoemType = {
+//   _id?: string;
+//   title: string;
+//   content: string;
+//   preview?: string;
+//   mood?: string;
+//   published?: boolean;
+//   author?: string;
+// };
+
+// const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:5000";
+
+// export default function AdminPage() {
+//   const router = useRouter();
+//   const [poems, setPoems] = useState<PoemType[]>([]);
+//   const [loading, setLoading] = useState(true);
+//   const [isAdding, setIsAdding] = useState(false);
+//   const [editing, setEditing] = useState<PoemType | null>(null);
+//   const [newPoem, setNewPoem] = useState<PoemType>({
+//     title: "",
+//     content: "",
+//     mood: "dreamy",
+//     published: false,
+//   });
+
+//   useEffect(() => {
+//     (async () => {
+//       const me = await fetch(`${API_BASE}/api/auth/me`, {
+//         credentials: "include",
+//       });
+//       if (!me.ok) {
+//         router.push("/auth/login");
+//         return;
+//       }
+//       fetchPoems();
+//     })();
+//   }, []);
+
+//   async function fetchPoems() {
+//     setLoading(true);
+//     const res = await fetch(`${API_BASE}/api/poems`, { credentials: "include" });
+//     if (!res.ok) {
+//       router.push("/auth/login");
+//       return;
+//     }
+//     const data = await res.json();
+//     setPoems(data);
+//     setLoading(false);
+//   }
+
+//   async function handleAdd() {
+//     if (!newPoem.title || !newPoem.content)
+//       return alert("Title + content required");
+//     const res = await fetch(`${API_BASE}/api/poems`, {
+//       method: "POST",
+//       credentials: "include",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify(newPoem),
+//     });
+//     if (!res.ok) {
+//       const err = await res.json();
+//       return alert(err.message || "Failed");
+//     }
+//     setNewPoem({ title: "", content: "", mood: "dreamy", published: false });
+//     setIsAdding(false);
+//     fetchPoems();
+//   }
+
+//   async function handleUpdate() {
+//     if (!editing?._id) return;
+//     const res = await fetch(`${API_BASE}/api/poems/${editing._id}`, {
+//       method: "PUT",
+//       credentials: "include",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify(editing),
+//     });
+//     if (!res.ok) return alert("Update failed");
+//     setEditing(null);
+//     fetchPoems();
+//   }
+
+//   async function handleDelete(id?: string) {
+//     if (!id) return;
+//     if (!confirm("Delete poem?")) return;
+//     const res = await fetch(`${API_BASE}/api/poems/${id}`, {
+//       method: "DELETE",
+//       credentials: "include",
+//     });
+//     if (!res.ok) return alert("Delete failed");
+//     fetchPoems();
+//   }
+
+//   if (loading) return <div className="p-6">Loading…</div>;
+
+//   return (
+//     <div className="min-h-screen p-6 bg-slate-50">
+//       <Navbar />
+//       <div className="max-w-6xl mx-auto">
+//         <div className="flex items-center justify-between mb-6">
+//           <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+//           <div className="flex items-center gap-2">
+//             // @ts-ignore
+//             {/* <Button onClick={() => setIsAdding(true)}>
+//               <Plus className="w-4 h-4 mr-2" />
+//               Add Poem
+//             </Button> */}
+        
+// {(Button as any)({ 
+//   onClick: () => setIsAdding(true), 
+//   children: [
+//     <Plus key="icon" className="w-4 h-4 mr-2" />,
+//     "Add Poem"
+//   ]
+// })}
+//             // @ts-ignore
+//             {/* <Button
+//               onClick={() => {
+//                 fetch(`${API_BASE}/api/auth/logout`, {
+//                   method: "POST",
+//                   credentials: "include",
+//                 }).then(() => router.push("/"));
+//               }}
+//             >
+//               Logout
+//             </Button> */}
+
+//           {(Button as any)({ 
+//   onClick: () => {
+//     fetch(`${API_BASE}/api/auth/logout`, {
+//       method: "POST",
+//       credentials: "include",
+//     }).then(() => router.push("/"));
+//   }, 
+//   children: "Logout"
+// })}
+
+//           </div>
+//         </div>
+
+//         <div className="grid gap-4 md:grid-cols-2">
+//           {poems.map((p) => (
+//             <Card key={p._id} className="p-4">
+//               <div className="flex justify-between">
+//                 <div>
+//                   <h3 className="text-xl font-bold">{p.title}</h3>
+//                   <p className="text-sm text-slate-500">
+//                     {p.author} •{" "}
+//                     {new Date((p as any).createdAt || Date.now()).toLocaleDateString()}
+//                   </p>
+//                 </div>
+//                 <div className="flex items-center gap-2">
+//                   <Badge variant="outline">{p.mood || "dreamy"}</Badge>
+//                 </div>
+//               </div>
+//               <p className="mt-3 italic text-slate-600">{p.preview}</p>
+
+//               <div className="mt-4 flex justify-between items-center">
+//                 <div className="flex gap-2">
+//                   <Button variant="outline" onClick={() => setEditing(p)}>
+//                     <Edit className="w-4 h-4 mr-1" />
+//                     Edit
+//                   </Button>
+//                   <Button variant="destructive" onClick={() => handleDelete(p._id)}>
+//                     <Trash2 className="w-4 h-4" />
+//                   </Button>
+//                 </div>
+//                 <div className="text-sm text-slate-600">
+//                   {p.published ? "Published" : "Draft"}
+//                 </div>
+//               </div>
+//             </Card>
+//           ))}
+//         </div>
+//       </div>
+
+//       {/* Add Modal */}
+//       {isAdding && (
+//         <Modal title="Add Poem" onClose={() => setIsAdding(false)}>
+//           <input
+//             className="w-full mb-2 p-2 border rounded"
+//             placeholder="Title"
+//             value={newPoem.title}
+//             onChange={(e) => setNewPoem({ ...newPoem, title: e.target.value })}
+//           />
+//           <textarea
+//             className="w-full mb-2 p-2 border rounded"
+//             rows={8}
+//             placeholder="Content"
+//             value={newPoem.content}
+//             onChange={(e) => setNewPoem({ ...newPoem, content: e.target.value })}
+//           />
+//           <div className="flex gap-2 items-center mb-4">
+//             <select
+//               value={newPoem.mood}
+//               onChange={(e) => setNewPoem({ ...newPoem, mood: e.target.value })}
+//               className="p-2 border rounded"
+//             >
+//               <option>dreamy</option>
+//               <option>romantic</option>
+//               <option>whimsical</option>
+//               <option>ethereal</option>
+//               <option>magical</option>
+//               <option>mystical</option>
+//             </select>
+//             <label className="flex items-center gap-2 text-sm">
+//               <input
+//                 type="checkbox"
+//                 checked={!!newPoem.published}
+//                 onChange={(e) =>
+//                   setNewPoem({ ...newPoem, published: e.target.checked })
+//                 }
+//               />
+//               Publish
+//             </label>
+//           </div>
+//           <div className="flex justify-end gap-2">
+//             <Button variant="outline" onClick={() => setIsAdding(false)}>
+//               Cancel
+//             </Button>
+//             <Button onClick={handleAdd}>
+//               <Save className="w-4 h-4 mr-1" /> Save
+//             </Button>
+//           </div>
+//         </Modal>
+//       )}
+
+//       {/* Edit Modal */}
+//       {editing && (
+//         <Modal title="Edit Poem" onClose={() => setEditing(null)}>
+//           <input
+//             className="w-full mb-2 p-2 border rounded"
+//             placeholder="Title"
+//             value={editing.title}
+//             onChange={(e) => setEditing({ ...editing, title: e.target.value })}
+//           />
+//           <textarea
+//             className="w-full mb-2 p-2 border rounded"
+//             rows={8}
+//             placeholder="Content"
+//             value={editing.content}
+//             onChange={(e) => setEditing({ ...editing, content: e.target.value })}
+//           />
+//           <div className="flex gap-2 items-center mb-4">
+//             <select
+//               value={editing.mood}
+//               onChange={(e) => setEditing({ ...editing, mood: e.target.value })}
+//               className="p-2 border rounded"
+//             >
+//               <option>dreamy</option>
+//               <option>romantic</option>
+//               <option>whimsical</option>
+//               <option>ethereal</option>
+//               <option>magical</option>
+//               <option>mystical</option>
+//             </select>
+//             <label className="flex items-center gap-2 text-sm">
+//               <input
+//                 type="checkbox"
+//                 checked={!!editing.published}
+//                 onChange={(e) =>
+//                   setEditing({ ...editing, published: e.target.checked })
+//                 }
+//               />
+//               Publish
+//             </label>
+//           </div>
+//           <div className="flex justify-end gap-2">
+//             <Button variant="outline" onClick={() => setEditing(null)}>
+//               Cancel
+//             </Button>
+//             <Button onClick={handleUpdate}>
+//               <Save className="w-4 h-4 mr-1" /> Update
+//             </Button>
+//           </div>
+//         </Modal>
+//       )}
+//     </div>
+//   );
+// }
+
+// function Modal({
+//   title,
+//   onClose,
+//   children,
+// }: {
+//   title: string;
+//   onClose: () => void;
+//   children: React.ReactNode;
+// }) {
+//   return (
+//     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+//       <div className="bg-white rounded-md p-6 w-full max-w-2xl">
+//         <div className="flex justify-between items-center mb-4">
+//           <h3 className="text-lg font-bold">{title}</h3>
+//           <button onClick={onClose}>
+//             <X />
+//           </button>
+//         </div>
+//         {children}
+//       </div>
+//     </div>
+//   );
+// }
+
+
+// below is new claude change code 
+
 "use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Plus, Edit, Trash2, Save, X } from "lucide-react";
 
-// import Navbar from "@/components/Navbar";
-// import Button from "@/components/ui/Button";
-// import Card from "@/components/ui/Card";
-import { Badge } from "../../components/badge";
-
 import Navbar from "../../src/components/Navbar"
-import Button from "../../src/components/ui/Button"
-import Card from "../../src/components/ui/Card"
 
 type PoemType = {
   _id?: string;
@@ -650,21 +973,16 @@ export default function AdminPage() {
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-3xl font-bold">Admin Dashboard</h1>
           <div className="flex items-center gap-2">
-            // @ts-ignore
-            {/* <Button onClick={() => setIsAdding(true)}>
+            <button
+              className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors bg-blue-600 text-white hover:bg-blue-700 px-4 py-2"
+              onClick={() => setIsAdding(true)}
+            >
               <Plus className="w-4 h-4 mr-2" />
               Add Poem
-            </Button> */}
-        
-{(Button as any)({ 
-  onClick: () => setIsAdding(true), 
-  children: [
-    <Plus key="icon" className="w-4 h-4 mr-2" />,
-    "Add Poem"
-  ]
-})}
-            // @ts-ignore
-            {/* <Button
+            </button>
+            
+            <button
+              className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors bg-red-600 text-white hover:bg-red-700 px-4 py-2"
               onClick={() => {
                 fetch(`${API_BASE}/api/auth/logout`, {
                   method: "POST",
@@ -673,24 +991,13 @@ export default function AdminPage() {
               }}
             >
               Logout
-            </Button> */}
-
-          {(Button as any)({ 
-  onClick: () => {
-    fetch(`${API_BASE}/api/auth/logout`, {
-      method: "POST",
-      credentials: "include",
-    }).then(() => router.push("/"));
-  }, 
-  children: "Logout"
-})}
-
+            </button>
           </div>
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
           {poems.map((p) => (
-            <Card key={p._id} className="p-4">
+            <div key={p._id} className="p-4 rounded-lg border bg-white shadow-sm">
               <div className="flex justify-between">
                 <div>
                   <h3 className="text-xl font-bold">{p.title}</h3>
@@ -700,26 +1007,34 @@ export default function AdminPage() {
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Badge variant="outline">{p.mood || "dreamy"}</Badge>
+                  <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-slate-100 text-slate-900">
+                    {p.mood || "dreamy"}
+                  </span>
                 </div>
               </div>
               <p className="mt-3 italic text-slate-600">{p.preview}</p>
 
               <div className="mt-4 flex justify-between items-center">
                 <div className="flex gap-2">
-                  <Button variant="outline" onClick={() => setEditing(p)}>
+                  <button
+                    className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors border border-slate-300 bg-white text-slate-900 hover:bg-slate-50 px-3 py-2"
+                    onClick={() => setEditing(p)}
+                  >
                     <Edit className="w-4 h-4 mr-1" />
                     Edit
-                  </Button>
-                  <Button variant="destructive" onClick={() => handleDelete(p._id)}>
+                  </button>
+                  <button
+                    className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors bg-red-600 text-white hover:bg-red-700 px-3 py-2"
+                    onClick={() => handleDelete(p._id)}
+                  >
                     <Trash2 className="w-4 h-4" />
-                  </Button>
+                  </button>
                 </div>
                 <div className="text-sm text-slate-600">
                   {p.published ? "Published" : "Draft"}
                 </div>
               </div>
-            </Card>
+            </div>
           ))}
         </div>
       </div>
@@ -765,12 +1080,18 @@ export default function AdminPage() {
             </label>
           </div>
           <div className="flex justify-end gap-2">
-            <Button variant="outline" onClick={() => setIsAdding(false)}>
+            <button
+              className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors border border-slate-300 bg-white text-slate-900 hover:bg-slate-50 px-4 py-2"
+              onClick={() => setIsAdding(false)}
+            >
               Cancel
-            </Button>
-            <Button onClick={handleAdd}>
+            </button>
+            <button
+              className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors bg-blue-600 text-white hover:bg-blue-700 px-4 py-2"
+              onClick={handleAdd}
+            >
               <Save className="w-4 h-4 mr-1" /> Save
-            </Button>
+            </button>
           </div>
         </Modal>
       )}
@@ -816,12 +1137,18 @@ export default function AdminPage() {
             </label>
           </div>
           <div className="flex justify-end gap-2">
-            <Button variant="outline" onClick={() => setEditing(null)}>
+            <button
+              className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors border border-slate-300 bg-white text-slate-900 hover:bg-slate-50 px-4 py-2"
+              onClick={() => setEditing(null)}
+            >
               Cancel
-            </Button>
-            <Button onClick={handleUpdate}>
+            </button>
+            <button
+              className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors bg-blue-600 text-white hover:bg-blue-700 px-4 py-2"
+              onClick={handleUpdate}
+            >
               <Save className="w-4 h-4 mr-1" /> Update
-            </Button>
+            </button>
           </div>
         </Modal>
       )}
@@ -852,4 +1179,3 @@ function Modal({
     </div>
   );
 }
-
