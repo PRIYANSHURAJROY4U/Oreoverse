@@ -805,7 +805,7 @@
 //         {/* Poems List */}
 //         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 //           {poems.map((poem, index) => (
-//             <Card
+//             <div
 //               key={index}
 //               className="bg-white/70 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300"
 //             >
@@ -840,7 +840,7 @@
 //                   {poem.content}
 //                 </pre>
 //               </div>
-//             </Card>
+//             </div>
 //           ))}
 //         </div>
 //       </div>
@@ -1125,11 +1125,11 @@ Though you turned your back to me,
 //           </h2>
 //           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 //             {poems.map((poem, index) => (
-//               <Card key={index} className="p-6 shadow-lg rounded-xl">
+//               <div key={index} className="p-6 shadow-lg rounded-xl">
 //                 <h3 className="text-xl font-semibold mb-2">{poem.title}</h3>
 //                 <p className="text-sm text-gray-500 mb-4">{poem.author}</p>
 //                 <p className="whitespace-pre-line text-lg leading-relaxed">{poem.content}</p>
-//               </Card>
+//               </div>
 //             ))}
 //           </div>
 //         </div>
@@ -1166,7 +1166,7 @@ export default function Page() {
                 transition={{ duration: 0.6, delay: index * 0.2 }}
                 whileHover={{ scale: 1.03 }}
               >
-                <Card className="p-6 bg-white/80 backdrop-blur-md shadow-xl rounded-2xl border border-purple-100 hover:shadow-2xl transition duration-500">
+                <div className="p-6 bg-white/80 backdrop-blur-md shadow-xl rounded-2xl border border-purple-100 hover:shadow-2xl transition duration-500">
                   <h3 className="text-2xl font-bold mb-2 text-purple-700">
                     {poem.title}
                   </h3>
@@ -1176,7 +1176,7 @@ export default function Page() {
                   <p className="text-gray-700 whitespace-pre-line leading-relaxed">
                     {poem.content}
                   </p>
-                </Card>
+                </div>
               </motion.div>
             ))}
           </div>
