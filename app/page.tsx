@@ -667,7 +667,7 @@ export default function HomePage() {
 
           {/* Desktop Links */}
           <div className="hidden md:flex items-center space-x-6">
-            <Link href="#poems" className="text-slate-600 hover:text-purple-600">Poems</Link>
+            <Link href="/poems" className="text-slate-600 hover:text-purple-600">Poems</Link>
             <Link href="/poem-generator" className="text-slate-600 hover:text-purple-600">Generator</Link>
             <Link href="/reviews" className="text-slate-600 hover:text-purple-600">Reviews</Link>
             <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">
