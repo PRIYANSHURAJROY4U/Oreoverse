@@ -651,12 +651,20 @@ export default function AdminPage() {
           <h1 className="text-3xl font-bold">Admin Dashboard</h1>
           <div className="flex items-center gap-2">
             // @ts-ignore
-            <Button onClick={() => setIsAdding(true)}>
+            {/* <Button onClick={() => setIsAdding(true)}>
               <Plus className="w-4 h-4 mr-2" />
               Add Poem
-            </Button>
+            </Button> */}
+        
+{(Button as any)({ 
+  onClick: () => setIsAdding(true), 
+  children: [
+    <Plus key="icon" className="w-4 h-4 mr-2" />,
+    "Add Poem"
+  ]
+})}
             // @ts-ignore
-            <Button
+            {/* <Button
               onClick={() => {
                 fetch(`${API_BASE}/api/auth/logout`, {
                   method: "POST",
@@ -665,7 +673,18 @@ export default function AdminPage() {
               }}
             >
               Logout
-            </Button>
+            </Button> */}
+
+          {(Button as any)({ 
+  onClick: () => {
+    fetch(`${API_BASE}/api/auth/logout`, {
+      method: "POST",
+      credentials: "include",
+    }).then(() => router.push("/"));
+  }, 
+  children: "Logout"
+})}
+
           </div>
         </div>
 
