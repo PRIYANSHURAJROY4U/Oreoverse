@@ -1156,6 +1156,33 @@ export default function AdminPage() {
   );
 }
 
+// Add this function to your admin component
+const generatePreview = (content: string) => {
+  const firstLine = content.split("\n")[0];
+  return firstLine.length > 80 
+    ? firstLine.substring(0, 80) + "..." 
+    : firstLine + (content.includes("\n") ? "..." : "");
+};
+
+// Update your handleAdd function:
+async function handleAdd() {
+  if (!newPoem.title || !newPoem.content)
+    return alert("Title + content required");
+  
+  const poemWithPreview = {
+    ...newPoem,
+    preview: generatePreview(newPoem.content)
+  };
+  
+  const res = await fetch(`${API_BASE}/api/poems`, {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(poemWithPreview),
+  });
+  // newly added preview 
+}
+
 function Modal({
   title,
   onClose,
