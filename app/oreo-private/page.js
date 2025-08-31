@@ -3,6 +3,7 @@ import Navbar from "../../src/components/Navbar"
 import Button from "../../src/components/ui/Button"
 import Card from "../../src/components/ui/Card"
 import PrivateRoute from "../../components/PrivateRoute";
+import Link from "next/link";
 
 const PrivateOreoPage = () => {
   const personalMessages = [
@@ -158,10 +159,19 @@ const PrivateOreoPage = () => {
               </div>
 
               <div className="mt-8">
-                <Button size="lg" className="bg-white text-purple-600 hover:bg-gray-50">
+                {/* <Button size="lg" className="bg-white text-purple-600 hover:bg-gray-50">
                   <Sparkles className="w-5 h-5 mr-2" />
                   Continue Your Journey
-                </Button>
+                </Button> */}
+                    <Link href="/permsg" passHref>
+      <Button
+        size="lg"
+        className="bg-white text-purple-600 hover:bg-gray-50"
+      >
+        <Sparkles className="w-5 h-5 mr-2" />
+        Continue Your Journey
+      </Button>
+    </Link>
               </div>
             </div>
 

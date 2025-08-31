@@ -64,7 +64,7 @@ export default function AdminRegisterPage() {
         </form>
         {message && <p className="mt-4 text-center">{message}</p>}
         <p className="text-sm text-gray-500 mt-2 text-center">
-          ⚠ Remove this page and backend route after creating admin.
+          ⚠ coded backend route
         </p>
       </div>
     </div>

@@ -11,7 +11,7 @@ const PrivateRoute = ({ children }) => {
   const [error, setError] = useState("");
 
   // Simple password protection (in production, use proper authentication)
-  const correctPassword = "oreo2024"; // You can change this
+  const correctPassword = "missoreo"; // You can change this
 
   const handleLogin = (e) => {
     e.preventDefault();

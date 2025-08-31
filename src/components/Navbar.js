@@ -206,6 +206,11 @@ const Navbar = () => {
       icon: <Sparkles className="w-4 h-4" />,
     },
     {
+      path: "/poems",
+      label: "Poems",
+      icon: <Sparkles className="w-4 h-4" />,
+    },
+    {
       path: "/reviews",
       label: "Reviews",
       icon: <MessageCircle className="w-4 h-4" />,
@@ -213,11 +218,11 @@ const Navbar = () => {
   ];
 
   const privateLinks = [
-    {
-      path: "/oreo-private",
-      label: "Oreo's Space",
-      icon: <User className="w-4 h-4" />,
-    },
+    // {
+    //   path: "/oreo-private",
+    //   label: "Oreo's Space",
+    //   icon: <User className="w-4 h-4" />,
+    // },
     {
       path: "/friend",
       label: "Friends Corner",
