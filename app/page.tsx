@@ -1147,9 +1147,11 @@ export default function HomePage() {
               <button className="inline-flex items-center justify-center rounded-md text-lg font-medium transition-colors bg-white text-purple-600 hover:bg-gray-50 px-6 py-3">
                 <PenTool className="w-5 h-5 mr-2" /> Start Writing
               </button>
+              <Link  href="/reviews" >
               <button className="inline-flex items-center justify-center rounded-md text-lg font-medium transition-colors border border-white text-white hover:bg-white/10 px-6 py-3">
                 <MessageCircle className="w-5 h-5 mr-2" /> Leave a Review
               </button>
+              </Link>
             </div>
           </div>
         </div>
