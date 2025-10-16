@@ -4,9 +4,7 @@ import { Heart, Users, Sparkles, Star, Crown } from "lucide-react";
 import { MessageCircleHeart as MessageHeart } from "lucide-react";
 import Link from "next/link";
 import PrivateRoute from "../../components/PrivateRoute";
-// import Navbar from "../";
-// import Button from "@/components/ui/Button";
-// import Card from "@/components/ui/Card";
+
 
 import Navbar from "../../src/components/Navbar";
 import Button from "../../src/components/ui/Button";
