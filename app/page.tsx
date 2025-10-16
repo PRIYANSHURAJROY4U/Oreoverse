@@ -1019,9 +1019,15 @@ export default function HomePage() {
             <Link href="/poem-generator" className="text-slate-600 hover:text-purple-600">Generator</Link>
             <Link href="/reviews" className="text-slate-600 hover:text-purple-600">Reviews</Link>
             <Link href="/admin"  className="text-slate-600 hover:text-purple-600" >Admin Panel</Link>
-            <button className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-4 py-2">
-              <Heart className="w-4 h-4 mr-2" /> Support
-            </button>
+           
+              <Link href="/subscribe">
+      <button
+        onClick={() => setMenuOpen(false)}
+        className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-4 py-2"
+      >
+        <Heart className="w-4 h-4 mr-2" /> Subscribe
+      </button>
+    </Link>
           </div>
 
           {/* Mobile Hamburger */}
@@ -1038,9 +1044,15 @@ export default function HomePage() {
               <Link onClick={() => setMenuOpen(false)} href="/poem-generator" className="text-slate-600 hover:text-purple-600">Generator</Link>
               <Link onClick={() => setMenuOpen(false)} href="/reviews" className="text-slate-600 hover:text-purple-600">Reviews</Link>
               <Link onClick={() => setMenuOpen(false)} href="/admin" className="text-slate-600 hover:text-purple-600">Admin Panel</Link>
-              <button onClick={() => setMenuOpen(false)} className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-4 py-2">
-                <Heart className="w-4 h-4 mr-2" /> Support
-              </button>
+    
+              <Link href="/subscribe">
+      <button
+        onClick={() => setMenuOpen(false)}
+        className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-4 py-2"
+      >
+        <Heart className="w-4 h-4 mr-2" /> Subscribe
+      </button>
+    </Link>
             </div>
           </div>
         )}

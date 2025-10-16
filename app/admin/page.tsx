@@ -1551,11 +1551,323 @@
 //   );
 // }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// "use client";
+
+// import { useEffect, useState, FC, ReactNode } from "react";
+// import { useRouter } from "next/navigation";
+// import { Plus, Edit, Trash2, Save, X, Star, CheckCircle, Clock } from "lucide-react";
+
+// // Local component imports - ensure these paths match your project structure
+// import Navbar from "../../src/components/Navbar";
+// import Button from "../../src/components/ui/Button"; 
+// import Card from "../../src/components/ui/Card"; 
+
+// // A simple Badge component definition. 
+// // You can move this to its own file (e.g., ui/Badge.tsx).
+// const Badge: FC<{className?: string; children: ReactNode}> = ({ className, children }) => (
+//     <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold ${className}`}>
+//         {children}
+//     </span>
+// );
+
+// // --- Type Definitions ---
+// type PoemType = {
+//   _id?: string;
+//   title: string;
+//   content: string;
+//   preview?: string;
+//   mood?: string;
+//   published?: boolean;
+//   author?: string;
+//   createdAt?: string;
+// };
+
+// type ReviewType = {
+//   _id: string;
+//   name: string;
+//   rating: number;
+//   comment: string;
+//   verified: boolean;
+//   createdAt: string;
+// };
+
+// const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:5000";
+
+// export default function AdminPage() {
+//   const router = useRouter();
+
+//   // --- State Management ---
+//   const [poems, setPoems] = useState<PoemType[]>([]);
+//   const [reviews, setReviews] = useState<ReviewType[]>([]);
+//   const [loading, setLoading] = useState(true);
+//   const [reviewsLoading, setReviewsLoading] = useState(true);
+  
+//   // Modal states for poems
+//   const [isAddingPoem, setIsAddingPoem] = useState(false);
+//   const [editingPoem, setEditingPoem] = useState<PoemType | null>(null);
+//   const [newPoem, setNewPoem] = useState<PoemType>({
+//     title: "", content: "", mood: "dreamy", published: false,
+//   });
+
+//   // --- Data Fetching ---
+//   useEffect(() => {
+//     (async () => {
+//       const me = await fetch(`${API_BASE}/api/auth/me`, { credentials: "include" });
+//       if (!me.ok) {
+//         router.push("/auth/login");
+//         return;
+//       }
+//       await Promise.all([fetchPoems(), fetchReviews()]);
+//       setLoading(false);
+//     })();
+//   }, [router]); // Added router to dependency array
+
+//   // --- Poem Functions ---
+//   const generatePreview = (content: string) => {
+//       const firstLine = content.split("\n")[0];
+//       return firstLine.length > 80 
+//         ? firstLine.substring(0, 80) + "..." 
+//         : firstLine + (content.includes("\n") ? "..." : "");
+//   };
+
+//   async function fetchPoems() {
+//     const res = await fetch(`${API_BASE}/api/poems`, { credentials: "include" });
+//     if (res.ok) setPoems(await res.json());
+//     else router.push("/auth/login");
+//   }
+
+//   async function handleAddPoem() {
+//     if (!newPoem.title || !newPoem.content) return alert("Title + content required");
+//     const poemWithPreview = { ...newPoem, preview: generatePreview(newPoem.content) };
+//     const res = await fetch(`${API_BASE}/api/poems`, {
+//       method: "POST", credentials: "include",
+//       headers: { "Content-Type": "application/json" }, body: JSON.stringify(poemWithPreview),
+//     });
+//     if (!res.ok) return alert((await res.json()).message || "Failed");
+//     setNewPoem({ title: "", content: "", mood: "dreamy", published: false });
+//     setIsAddingPoem(false);
+//     await fetchPoems();
+//   }
+
+//   async function handleUpdatePoem() {
+//     if (!editingPoem?._id) return;
+//     const poemWithPreview = { ...editingPoem, preview: generatePreview(editingPoem.content) };
+//     const res = await fetch(`${API_BASE}/api/poems/${editingPoem._id}`, {
+//       method: "PUT", credentials: "include",
+//       headers: { "Content-Type": "application/json" }, body: JSON.stringify(poemWithPreview),
+//     });
+//     if (!res.ok) return alert("Update failed");
+//     setEditingPoem(null);
+//     await fetchPoems();
+//   }
+
+//   async function handleDeletePoem(id?: string) {
+//     if (!id || !confirm("Are you sure you want to delete this poem?")) return;
+//     const res = await fetch(`${API_BASE}/api/poems/${id}`, { method: "DELETE", credentials: "include" });
+//     if (!res.ok) return alert("Delete failed");
+//     await fetchPoems();
+//   }
+
+//   // --- Review Moderation Functions ---
+//   async function fetchReviews() {
+//     setReviewsLoading(true);
+//     const res = await fetch(`${API_BASE}/api/reviews/all`, { credentials: "include" });
+//     if (res.ok) setReviews(await res.json());
+//     setReviewsLoading(false);
+//   }
+  
+//   async function handleApproveReview(id: string) {
+//     const res = await fetch(`${API_BASE}/api/reviews/${id}/verify`, { method: 'PUT', credentials: 'include' });
+//     if (res.ok) await fetchReviews();
+//     else alert("Failed to approve review.");
+//   }
+
+//   async function handleDeleteReview(id: string) {
+//     if (!confirm("Are you sure you want to delete this review?")) return;
+//     const res = await fetch(`${API_BASE}/api/reviews/${id}`, { method: 'DELETE', credentials: 'include' });
+//     if (res.ok) await fetchReviews();
+//     else alert("Failed to delete review.");
+//   }
+  
+//   // --- Helper Render Functions ---
+//   const renderStars = (rating: number) => (
+//     <div className="flex space-x-1">{[...Array(5)].map((_, i) => (
+//       <Star key={i} className={`w-4 h-4 ${i < rating ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} />
+//     ))}</div>
+//   );
+
+//   const pendingReviewsCount = reviews.filter(r => !r.verified).length;
+
+//   if (loading) return <div className="p-6">Loading Admin Dashboard…</div>;
+
+//   // --- MAIN RENDER ---
+//   return (
+//     <div className="min-h-screen p-6 bg-slate-50">
+//       <Navbar />
+//       <div className="max-w-6xl mx-auto">
+//         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+//           <h1 className="text-3xl font-bold mb-4 md:mb-0">Admin Dashboard</h1>
+//           <div className="flex items-center gap-2">
+//             <Button onClick={() => setIsAddingPoem(true)}>
+//               <Plus className="w-4 h-4 mr-2" />Add Poem
+//             </Button>
+//             <Button variant="destructive" onClick={() => {
+//               fetch(`${API_BASE}/api/auth/logout`, { method: "POST", credentials: "include" })
+//               .then(() => router.push("/"));
+//             }}>Logout</Button>
+//           </div>
+//         </div>
+
+//         {/* Stats Grid */}
+//         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+//            <Card className="text-center p-6"><div className="text-3xl font-bold">{poems.length}</div><div className="text-slate-600">Total Poems</div></Card>
+//            <Card className="text-center p-6"><div className="text-3xl font-bold">{poems.filter(p=>p.published).length}</div><div className="text-slate-600">Published Poems</div></Card>
+//            <Card className="text-center p-6 text-orange-600"><div className="text-3xl font-bold">{pendingReviewsCount}</div><div className="text-slate-600">Pending Reviews</div></Card>
+//            <Card className="text-center p-6 text-green-600"><div className="text-3xl font-bold">{reviews.filter(r=>r.verified).length}</div><div className="text-slate-600">Approved Reviews</div></Card>
+//         </div>
+        
+//         {/* Poem Management Section */}
+//         <div className="mb-12">
+//             <h2 className="text-2xl font-bold mb-4">Poem Management</h2>
+//             <div className="grid gap-4 md:grid-cols-2">
+//               {poems.map((p) => (
+//                   <Card key={p._id} className="p-4">
+//                       <h3 className="text-xl font-bold">{p.title}</h3>
+//                       <p className="mt-2 italic text-slate-600">{p.preview}</p>
+//                       <div className="mt-4 flex justify-between items-center">
+//                           <div className="flex gap-2">
+//                               <Button variant="outline" size="sm" onClick={() => setEditingPoem(p)}><Edit className="w-4 h-4 mr-1" />Edit</Button>
+//                               <Button variant="destructive" size="sm" onClick={() => handleDeletePoem(p._id)}><Trash2 className="w-4 h-4" /></Button>
+//                           </div>
+//                           <Badge className={p.published ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"}>{p.published ? "Published" : "Draft"}</Badge>
+//                       </div>
+//                   </Card>
+//               ))}
+//             </div>
+//         </div>
+
+//         {/* Review Moderation Section */}
+//         <div>
+//           <h2 className="text-2xl font-bold mb-4">Review Moderation</h2>
+//           <div className="space-y-4">
+//             {reviewsLoading && <p className="text-slate-500 text-center">Loading reviews...</p>}
+//             {!reviewsLoading && reviews.length === 0 && <p className="text-slate-500 text-center">No reviews have been submitted yet.</p>}
+//             {!reviewsLoading && reviews.map(review => (
+//               <Card key={review._id} className="p-4 bg-white/90">
+//                 <div className="flex flex-col md:flex-row md:justify-between md:items-start">
+//                   <div className="flex-1 mb-3 md:mb-0">
+//                     <div className="flex items-center gap-3 mb-1">
+//                       <h3 className="font-bold text-lg">{review.name}</h3>
+//                       {renderStars(review.rating)}
+//                     </div>
+//                      <p className="mt-2 text-slate-700 italic">"{review.comment}"</p>
+//                      <p className="text-xs text-slate-400 mt-2">Submitted on {new Date(review.createdAt).toLocaleDateString()}</p>
+//                   </div>
+//                   <div className="flex items-center gap-2 self-start flex-shrink-0">
+//                       {review.verified ? (
+//                          <Badge className="bg-green-100 text-green-800"><CheckCircle className="w-3 h-3 mr-1"/>Verified</Badge>
+//                       ) : (
+//                          <Badge className="bg-yellow-100 text-yellow-800"><Clock className="w-3 h-3 mr-1"/>Pending</Badge>
+//                       )}
+//                     {!review.verified && (
+//                       <Button onClick={() => handleApproveReview(review._id)} size="sm" className="bg-green-500 hover:bg-green-600"><CheckCircle className="w-4 h-4 mr-1" />Approve</Button>
+//                     )}
+//                     <Button onClick={() => handleDeleteReview(review._id)} size="sm" variant="destructive"><Trash2 className="w-4 h-4" /></Button>
+//                   </div>
+//                 </div>
+//               </Card>
+//             ))}
+//           </div>
+//         </div>
+//       </div>
+      
+//       {/* Poem Modals */}
+//       {isAddingPoem && (
+//         <Modal title="Add New Poem" onClose={() => setIsAddingPoem(false)}>
+//           <div className="space-y-4">
+//               <input className="w-full p-2 border rounded" placeholder="Title" value={newPoem.title} onChange={(e) => setNewPoem({ ...newPoem, title: e.target.value })} />
+//               <textarea className="w-full p-2 border rounded" rows={10} placeholder="Content..." value={newPoem.content} onChange={(e) => setNewPoem({ ...newPoem, content: e.target.value })} />
+//               <div className="flex gap-4 items-center">
+//                   <select value={newPoem.mood} onChange={(e) => setNewPoem({ ...newPoem, mood: e.target.value })} className="p-2 border rounded">
+//                       <option>dreamy</option><option>romantic</option><option>whimsical</option><option>ethereal</option><option>magical</option><option>mystical</option>
+//                   </select>
+//                   <label className="flex items-center gap-2 text-sm cursor-pointer">
+//                       <input type="checkbox" checked={!!newPoem.published} onChange={(e) => setNewPoem({ ...newPoem, published: e.target.checked })} /> Publish
+//                   </label>
+//               </div>
+//               <div className="flex justify-end gap-2">
+//                   <Button variant="outline" onClick={() => setIsAddingPoem(false)}>Cancel</Button>
+//                   <Button onClick={handleAddPoem}><Save className="w-4 h-4 mr-1" /> Save</Button>
+//               </div>
+//           </div>
+//         </Modal>
+//       )}
+//       {editingPoem && (
+//         <Modal title="Edit Poem" onClose={() => setEditingPoem(null)}>
+//            <div className="space-y-4">
+//               <input className="w-full p-2 border rounded" placeholder="Title" value={editingPoem.title} onChange={(e) => setEditingPoem({ ...editingPoem, title: e.target.value })} />
+//               <textarea className="w-full p-2 border rounded" rows={10} placeholder="Content..." value={editingPoem.content} onChange={(e) => setEditingPoem({ ...editingPoem, content: e.target.value })} />
+//               <div className="flex gap-4 items-center">
+//                   <select value={editingPoem.mood} onChange={(e) => setEditingPoem({ ...editingPoem, mood: e.target.value })} className="p-2 border rounded">
+//                       <option>dreamy</option><option>romantic</option><option>whimsical</option><option>ethereal</option><option>magical</option><option>mystical</option>
+//                   </select>
+//                   <label className="flex items-center gap-2 text-sm cursor-pointer">
+//                       <input type="checkbox" checked={!!editingPoem.published} onChange={(e) => setEditingPoem({ ...editingPoem, published: e.target.checked })} /> Publish
+//                   </label>
+//               </div>
+//               <div className="flex justify-end gap-2">
+//                   <Button variant="outline" onClick={() => setEditingPoem(null)}>Cancel</Button>
+//                   <Button onClick={handleUpdatePoem}><Save className="w-4 h-4 mr-1" /> Update</Button>
+//               </div>
+//           </div>
+//         </Modal>
+//       )}
+//     </div>
+//   );
+// }
+
+// // Modal Component
+// function Modal({ title, onClose, children }: { title: string; onClose: () => void; children: React.ReactNode }) {
+//   return (
+//     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+//       <div className="bg-white rounded-md p-6 w-full max-w-2xl animate-in fade-in-0 zoom-in-95">
+//         <div className="flex justify-between items-center mb-4">
+//           <h3 className="text-lg font-bold">{title}</h3>
+//           <button onClick={onClose} className="p-1 rounded-full hover:bg-slate-100"><X className="w-4 h-4" /></button>
+//         </div>
+//         {children}
+//       </div>
+//     </div>
+//   );
+// }
+
+
+
+
+
 "use client";
 
 import { useEffect, useState, FC, ReactNode } from "react";
 import { useRouter } from "next/navigation";
-import { Plus, Edit, Trash2, Save, X, Star, CheckCircle, Clock } from "lucide-react";
+import { Plus, Edit, Trash2, Save, X, Star, CheckCircle, Clock, Mail, Users, Download, Search } from "lucide-react";
 
 // Local component imports - ensure these paths match your project structure
 import Navbar from "../../src/components/Navbar";
@@ -1563,7 +1875,6 @@ import Button from "../../src/components/ui/Button";
 import Card from "../../src/components/ui/Card"; 
 
 // A simple Badge component definition. 
-// You can move this to its own file (e.g., ui/Badge.tsx).
 const Badge: FC<{className?: string; children: ReactNode}> = ({ className, children }) => (
     <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold ${className}`}>
         {children}
@@ -1591,6 +1902,12 @@ type ReviewType = {
   createdAt: string;
 };
 
+type SubscriberType = {
+  _id: string;
+  email: string;
+  createdAt: string;
+};
+
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:5000";
 
 export default function AdminPage() {
@@ -1599,8 +1916,12 @@ export default function AdminPage() {
   // --- State Management ---
   const [poems, setPoems] = useState<PoemType[]>([]);
   const [reviews, setReviews] = useState<ReviewType[]>([]);
+  const [subscribers, setSubscribers] = useState<SubscriberType[]>([]);
   const [loading, setLoading] = useState(true);
   const [reviewsLoading, setReviewsLoading] = useState(true);
+  const [subscribersLoading, setSubscribersLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState<'poems' | 'reviews' | 'subscribers'>('poems');
+  const [searchQuery, setSearchQuery] = useState('');
   
   // Modal states for poems
   const [isAddingPoem, setIsAddingPoem] = useState(false);
@@ -1617,10 +1938,10 @@ export default function AdminPage() {
         router.push("/auth/login");
         return;
       }
-      await Promise.all([fetchPoems(), fetchReviews()]);
+      await Promise.all([fetchPoems(), fetchReviews(), fetchSubscribers()]);
       setLoading(false);
     })();
-  }, [router]); // Added router to dependency array
+  }, [router]);
 
   // --- Poem Functions ---
   const generatePreview = (content: string) => {
@@ -1663,9 +1984,26 @@ export default function AdminPage() {
 
   async function handleDeletePoem(id?: string) {
     if (!id || !confirm("Are you sure you want to delete this poem?")) return;
-    const res = await fetch(`${API_BASE}/api/poems/${id}`, { method: "DELETE", credentials: "include" });
-    if (!res.ok) return alert("Delete failed");
-    await fetchPoems();
+    
+    try {
+      const res = await fetch(`${API_BASE}/api/poems/${id}`, { 
+        method: "DELETE", 
+        credentials: "include",
+        headers: { "Content-Type": "application/json" }
+      });
+      
+      if (!res.ok) {
+        const error = await res.json();
+        return alert(error.message || "Delete failed");
+      }
+      
+      // Remove from local state immediately
+      setPoems(prevPoems => prevPoems.filter(p => p._id !== id));
+      alert("Poem deleted successfully!");
+    } catch (error) {
+      console.error("Delete error:", error);
+      alert("Failed to delete poem");
+    }
   }
 
   // --- Review Moderation Functions ---
@@ -1685,8 +2023,68 @@ export default function AdminPage() {
   async function handleDeleteReview(id: string) {
     if (!confirm("Are you sure you want to delete this review?")) return;
     const res = await fetch(`${API_BASE}/api/reviews/${id}`, { method: 'DELETE', credentials: 'include' });
-    if (res.ok) await fetchReviews();
-    else alert("Failed to delete review.");
+    if (res.ok) {
+      setReviews(prevReviews => prevReviews.filter(r => r._id !== id));
+      alert("Review deleted successfully!");
+    } else {
+      alert("Failed to delete review.");
+    }
+  }
+
+  // --- Subscriber Functions ---
+  async function fetchSubscribers() {
+    setSubscribersLoading(true);
+    try {
+      const res = await fetch(`${API_BASE}/api/subscribers`, { credentials: "include" });
+      if (res.ok) {
+        const data = await res.json();
+        setSubscribers(data.subscribers || []);
+      }
+    } catch (error) {
+      console.error("Failed to fetch subscribers:", error);
+    }
+    setSubscribersLoading(false);
+  }
+
+  async function handleDeleteSubscriber(id: string, email: string) {
+    if (!confirm(`Are you sure you want to remove ${email} from subscribers?`)) return;
+    
+    try {
+      const res = await fetch(`${API_BASE}/api/subscribers/${id}`, { 
+        method: 'DELETE', 
+        credentials: 'include' 
+      });
+      
+      if (res.ok) {
+        setSubscribers(prevSubs => prevSubs.filter(s => s._id !== id));
+        alert("Subscriber removed successfully!");
+      } else {
+        alert("Failed to delete subscriber.");
+      }
+    } catch (error) {
+      console.error("Delete subscriber error:", error);
+      alert("Failed to delete subscriber");
+    }
+  }
+
+  function handleExportSubscribers() {
+    const csvContent = [
+      ['Email', 'Subscribed At'],
+      ...subscribers.map(sub => [
+        sub.email,
+        new Date(sub.createdAt).toLocaleString()
+      ])
+    ]
+      .map(row => row.join(','))
+      .join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `subscribers_${new Date().toISOString().split('T')[0]}.csv`;
+    a.click();
+    window.URL.revokeObjectURL(url);
   }
   
   // --- Helper Render Functions ---
@@ -1697,6 +2095,9 @@ export default function AdminPage() {
   );
 
   const pendingReviewsCount = reviews.filter(r => !r.verified).length;
+  const filteredSubscribers = subscribers.filter(sub =>
+    sub.email.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   if (loading) return <div className="p-6">Loading Admin Dashboard…</div>;
 
@@ -1720,14 +2121,61 @@ export default function AdminPage() {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-           <Card className="text-center p-6"><div className="text-3xl font-bold">{poems.length}</div><div className="text-slate-600">Total Poems</div></Card>
-           <Card className="text-center p-6"><div className="text-3xl font-bold">{poems.filter(p=>p.published).length}</div><div className="text-slate-600">Published Poems</div></Card>
-           <Card className="text-center p-6 text-orange-600"><div className="text-3xl font-bold">{pendingReviewsCount}</div><div className="text-slate-600">Pending Reviews</div></Card>
-           <Card className="text-center p-6 text-green-600"><div className="text-3xl font-bold">{reviews.filter(r=>r.verified).length}</div><div className="text-slate-600">Approved Reviews</div></Card>
+           <Card className="text-center p-6">
+             <div className="text-3xl font-bold">{poems.length}</div>
+             <div className="text-slate-600">Total Poems</div>
+           </Card>
+           <Card className="text-center p-6">
+             <div className="text-3xl font-bold">{poems.filter(p=>p.published).length}</div>
+             <div className="text-slate-600">Published Poems</div>
+           </Card>
+           <Card className="text-center p-6 text-orange-600">
+             <div className="text-3xl font-bold">{pendingReviewsCount}</div>
+             <div className="text-slate-600">Pending Reviews</div>
+           </Card>
+           <Card className="text-center p-6 text-purple-600">
+             <div className="text-3xl font-bold">{subscribers.length}</div>
+             <div className="text-slate-600">Subscribers</div>
+           </Card>
+        </div>
+
+        {/* Tab Navigation */}
+        <div className="flex border-b border-slate-200 mb-6">
+          <button
+            onClick={() => setActiveTab('poems')}
+            className={`px-6 py-3 font-semibold transition-colors ${
+              activeTab === 'poems' 
+                ? 'border-b-2 border-purple-600 text-purple-600' 
+                : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            Poems ({poems.length})
+          </button>
+          <button
+            onClick={() => setActiveTab('reviews')}
+            className={`px-6 py-3 font-semibold transition-colors ${
+              activeTab === 'reviews' 
+                ? 'border-b-2 border-purple-600 text-purple-600' 
+                : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            Reviews ({reviews.length})
+          </button>
+          <button
+            onClick={() => setActiveTab('subscribers')}
+            className={`px-6 py-3 font-semibold transition-colors ${
+              activeTab === 'subscribers' 
+                ? 'border-b-2 border-purple-600 text-purple-600' 
+                : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            Subscribers ({subscribers.length})
+          </button>
         </div>
         
         {/* Poem Management Section */}
-        <div className="mb-12">
+        {activeTab === 'poems' && (
+          <div className="mb-12">
             <h2 className="text-2xl font-bold mb-4">Poem Management</h2>
             <div className="grid gap-4 md:grid-cols-2">
               {poems.map((p) => (
@@ -1736,49 +2184,158 @@ export default function AdminPage() {
                       <p className="mt-2 italic text-slate-600">{p.preview}</p>
                       <div className="mt-4 flex justify-between items-center">
                           <div className="flex gap-2">
-                              <Button variant="outline" size="sm" onClick={() => setEditingPoem(p)}><Edit className="w-4 h-4 mr-1" />Edit</Button>
-                              <Button variant="destructive" size="sm" onClick={() => handleDeletePoem(p._id)}><Trash2 className="w-4 h-4" /></Button>
+                              <Button variant="outline" size="sm" onClick={() => setEditingPoem(p)}>
+                                <Edit className="w-4 h-4 mr-1" />Edit
+                              </Button>
+                              <Button variant="destructive" size="sm" onClick={() => handleDeletePoem(p._id)}>
+                                <Trash2 className="w-4 h-4" />
+                              </Button>
                           </div>
-                          <Badge className={p.published ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"}>{p.published ? "Published" : "Draft"}</Badge>
+                          <Badge className={p.published ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"}>
+                            {p.published ? "Published" : "Draft"}
+                          </Badge>
                       </div>
                   </Card>
               ))}
             </div>
-        </div>
+          </div>
+        )}
 
         {/* Review Moderation Section */}
-        <div>
-          <h2 className="text-2xl font-bold mb-4">Review Moderation</h2>
-          <div className="space-y-4">
-            {reviewsLoading && <p className="text-slate-500 text-center">Loading reviews...</p>}
-            {!reviewsLoading && reviews.length === 0 && <p className="text-slate-500 text-center">No reviews have been submitted yet.</p>}
-            {!reviewsLoading && reviews.map(review => (
-              <Card key={review._id} className="p-4 bg-white/90">
-                <div className="flex flex-col md:flex-row md:justify-between md:items-start">
-                  <div className="flex-1 mb-3 md:mb-0">
-                    <div className="flex items-center gap-3 mb-1">
-                      <h3 className="font-bold text-lg">{review.name}</h3>
-                      {renderStars(review.rating)}
+        {activeTab === 'reviews' && (
+          <div>
+            <h2 className="text-2xl font-bold mb-4">Review Moderation</h2>
+            <div className="space-y-4">
+              {reviewsLoading && <p className="text-slate-500 text-center">Loading reviews...</p>}
+              {!reviewsLoading && reviews.length === 0 && <p className="text-slate-500 text-center">No reviews have been submitted yet.</p>}
+              {!reviewsLoading && reviews.map(review => (
+                <Card key={review._id} className="p-4 bg-white/90">
+                  <div className="flex flex-col md:flex-row md:justify-between md:items-start">
+                    <div className="flex-1 mb-3 md:mb-0">
+                      <div className="flex items-center gap-3 mb-1">
+                        <h3 className="font-bold text-lg">{review.name}</h3>
+                        {renderStars(review.rating)}
+                      </div>
+                       <p className="mt-2 text-slate-700 italic">"{review.comment}"</p>
+                       <p className="text-xs text-slate-400 mt-2">Submitted on {new Date(review.createdAt).toLocaleDateString()}</p>
                     </div>
-                     <p className="mt-2 text-slate-700 italic">"{review.comment}"</p>
-                     <p className="text-xs text-slate-400 mt-2">Submitted on {new Date(review.createdAt).toLocaleDateString()}</p>
-                  </div>
-                  <div className="flex items-center gap-2 self-start flex-shrink-0">
-                      {review.verified ? (
-                         <Badge className="bg-green-100 text-green-800"><CheckCircle className="w-3 h-3 mr-1"/>Verified</Badge>
-                      ) : (
-                         <Badge className="bg-yellow-100 text-yellow-800"><Clock className="w-3 h-3 mr-1"/>Pending</Badge>
+                    <div className="flex items-center gap-2 self-start flex-shrink-0">
+                        {review.verified ? (
+                           <Badge className="bg-green-100 text-green-800"><CheckCircle className="w-3 h-3 mr-1"/>Verified</Badge>
+                        ) : (
+                           <Badge className="bg-yellow-100 text-yellow-800"><Clock className="w-3 h-3 mr-1"/>Pending</Badge>
+                        )}
+                      {!review.verified && (
+                        <Button onClick={() => handleApproveReview(review._id)} size="sm" className="bg-green-500 hover:bg-green-600">
+                          <CheckCircle className="w-4 h-4 mr-1" />Approve
+                        </Button>
                       )}
-                    {!review.verified && (
-                      <Button onClick={() => handleApproveReview(review._id)} size="sm" className="bg-green-500 hover:bg-green-600"><CheckCircle className="w-4 h-4 mr-1" />Approve</Button>
-                    )}
-                    <Button onClick={() => handleDeleteReview(review._id)} size="sm" variant="destructive"><Trash2 className="w-4 h-4" /></Button>
+                      <Button onClick={() => handleDeleteReview(review._id)} size="sm" variant="destructive">
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              </Card>
-            ))}
+                </Card>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
+
+        {/* Subscriber Management Section */}
+        {activeTab === 'subscribers' && (
+          <div>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl font-bold">Subscriber Management</h2>
+              <Button 
+                onClick={handleExportSubscribers} 
+                disabled={subscribers.length === 0}
+                variant="outline"
+              >
+                <Download className="w-4 h-4 mr-2" />
+                Export CSV
+              </Button>
+            </div>
+
+            {/* Search Bar */}
+            <div className="relative mb-6">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
+              <input
+                type="text"
+                placeholder="Search subscribers by email..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              />
+            </div>
+
+            <Card className="overflow-hidden">
+              {subscribersLoading && (
+                <div className="text-center py-12 text-slate-500">Loading subscribers...</div>
+              )}
+              
+              {!subscribersLoading && filteredSubscribers.length === 0 && (
+                <div className="text-center py-12">
+                  <Mail className="w-16 h-16 text-slate-300 mx-auto mb-4" />
+                  <p className="text-slate-600">
+                    {searchQuery ? 'No subscribers found matching your search' : 'No subscribers yet'}
+                  </p>
+                </div>
+              )}
+
+              {!subscribersLoading && filteredSubscribers.length > 0 && (
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="bg-slate-100">
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">
+                          Email
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">
+                          Subscribed At
+                        </th>
+                        <th className="px-6 py-3 text-right text-xs font-semibold text-slate-700 uppercase tracking-wider">
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-200">
+                      {filteredSubscribers.map((subscriber) => (
+                        <tr key={subscriber._id} className="hover:bg-slate-50 transition-colors">
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="flex items-center gap-2">
+                              <Mail className="w-4 h-4 text-purple-600" />
+                              <span className="text-slate-800 font-medium">
+                                {subscriber.email}
+                              </span>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                            {new Date(subscriber.createdAt).toLocaleDateString('en-US', {
+                              year: 'numeric',
+                              month: 'short',
+                              day: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            })}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right">
+                            <Button
+                              onClick={() => handleDeleteSubscriber(subscriber._id, subscriber.email)}
+                              size="sm"
+                              variant="destructive"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </Card>
+          </div>
+        )}
       </div>
       
       {/* Poem Modals */}

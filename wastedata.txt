@@ -1,3 +1,25 @@
 // npm start for dev
 // npm run build
 // npm run start:prod    for prod
+
+
+your-project/
+├── backend/
+│   ├── models/
+│   │   └── Subscriber.js          ✅ Already have
+│   ├── routes/
+│   │   ├── subscriberRoutes.js    ✅ Use artifact code
+│   │   └── poemRoutes.js          ✅ Use artifact code
+│   ├── services/
+│   │   └── emailService.js        ✅ Use artifact code
+│   └── server.js                  ✅ Update with artifact code
+│
+└── frontend/
+    └── app/
+        ├── subscribe/
+        │   └── page.tsx           ✅ Fixed version
+        ├── unsubscribe/
+        │   └── page.tsx           ✅ New page
+        └── admin/
+            └── subscribers/
+                └── page.tsx       ✅ New admin page

@@ -278,11 +278,17 @@ const Navbar = () => {
                 <span>{link.label}</span>
               </Link>
             ))}
-
-            <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">
+              
+            {/* <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">
               <Heart className="w-4 h-4 mr-2" />
               Support
-            </Button>
+            </Button> */}
+              <Link href="/subscribe">
+      <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">
+        <Heart className="w-4 h-4 mr-2" />
+        Subscribe
+      </Button>
+    </Link>
           </div>
 
           {/* Mobile menu button */}
