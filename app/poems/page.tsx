@@ -1206,11 +1206,13 @@ type PoemType = {
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:5000";
 
 // Existing published poems (hardcoded)
+// Existing published poems (hardcoded)
 const existingPoems = [
-  { 
-     _id: "poem-1", 
+  {
+    _id: "poem-1",
     title: "Immortal I Lie",
     author: "@oreongutan // @oftoreo",
+    createdAt: "2024-12-13T00:00:00Z",
     content: `The moment you place me in the coffin,
 My lungs give up, my lungs give out.
 
@@ -1242,10 +1244,11 @@ The more I live, the more I live.
 For I am immortal. Immortal I lie.`,
     mood: "mystical"
   },
-  { 
-     _id: "poem-2", 
+  {
+    _id: "poem-2",
     title: "When Will I Script My Own Stars?",
     author: "@oreongutan // @oftoreo",
+    createdAt: "2024-11-22T00:00:00Z",
     content: `On usual days, I wait for words.
 I fear the string, I fear the flow.
 But tonight, I sit in this corner,
@@ -1271,9 +1274,11 @@ who wrote this play for me:
 "When will I script my own stars?"`,
     mood: "ethereal"
   },
-  {  _id: "poem-3", 
+  {
+    _id: "poem-3",
     title: "Pause",
     author: "@oreongutan // @oftoreo",
+    createdAt: "2024-10-10T00:00:00Z",
     content: `I drew the curtains,
 Turned the lights off
 To take a break.
@@ -1328,9 +1333,11 @@ And ask,
 "Can we pause?"`,
     mood: "whimsical"
   },
-  {  _id: "poem-4", 
+  {
+    _id: "poem-4",
     title: "Low Serotonin",
-    author: "@oony.may // @oftoreo",
+    author: "@oreongutan // @oftoreo",
+    createdAt: "2024-09-05T00:00:00Z",
     content: `Wandering through the woods on a snowy evening,
 Sugar rush with the candy sweetness,
 Parched mouth, "I need something",
@@ -1371,10 +1378,11 @@ Parched mouth, "it's better for us, it's better for you",
 I tumble slowly upon low serotonin.`,
     mood: "dreamy"
   },
-  { 
-     _id: "poem-5", 
+  {
+    _id: "poem-5",
     title: "I'll Be Back Home To You",
-    author: "@oony.may // @oftoreo",
+    author: "@oreongutan // @oftoreo",
+    createdAt: "2024-08-18T00:00:00Z",
     content: `From the dark depths
 Of the dying city,
 Carefully dodging
@@ -1418,10 +1426,11 @@ And waste no tears, mother,
 I'll be back to you.`,
     mood: "romantic"
   },
-  { 
-     _id: "poem-6", 
+  {
+    _id: "poem-6",
     title: "You're Cold",
-    author: "@oony.may // @oftoreo",
+    author: "@oreongutan // @oftoreo",
+    createdAt: "2024-07-07T00:00:00Z",
     content: `"You're cold",
 I said as he brushed,
 His fingers twined with mine.
