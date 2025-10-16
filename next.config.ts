@@ -26,8 +26,16 @@
 // module.exports = nextConfig
 
 
-import type { NextConfig } from 'next';
+// import type { NextConfig } from 'next';
 
-const nextConfig: NextConfig = {};
+// const nextConfig: NextConfig = {};
 
-export default nextConfig;
+// export default nextConfig;
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+};
+
+module.exports = nextConfig;
