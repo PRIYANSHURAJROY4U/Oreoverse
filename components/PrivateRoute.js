@@ -11,7 +11,7 @@ const PrivateRoute = ({ children }) => {
   const [error, setError] = useState("");
 
   // Simple password protection (in production, use proper authentication)
-  const correctPassword = "missoreo"; // You can change this
+  const correctPassword = process.env.NEXT_PUBLIC_PRIVATE_PSSWRD; // You can change this
 
   const handleLogin = (e) => {
     e.preventDefault();
